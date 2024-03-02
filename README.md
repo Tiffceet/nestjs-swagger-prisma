@@ -2,7 +2,7 @@
 
 ## Added support
 - Prisma
-- Dockerfile
+- Docker
 - VSCode Debugger
 - @nestjs/config
 
@@ -12,9 +12,10 @@
 - Logs all incoming http requests
 - Prisma CRUD generation
 - Uses pnpm to save disk space
-- fix(prettier): CFLF warning in windows
+- fix(prettier): CRLF warning in windows
 - fix(prettier): single quote only 
 - Github action to build docker image
+- Better debugging experience w/o restarting api server
 
 ## Folder structure
 ```
@@ -27,6 +28,7 @@ L app
       L services
       L user.module.ts
     L ...
+    L core.module.ts
   L providers
   L common
 L bootstrap
@@ -37,3 +39,4 @@ L interceptors
 
 ## Todo
 - Add unit & e2e test
+- Add dynamic auth
