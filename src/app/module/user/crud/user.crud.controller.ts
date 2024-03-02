@@ -8,9 +8,11 @@ import {
   Post,
   Put,
   Inject,
+  Query,
 } from "@nestjs/common";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { UserService } from "../services/user.service";
+import { Prisma } from "@prisma/client";
 import {
   CreateUserDto,
   PaginatedUserEntity,
@@ -18,6 +20,8 @@ import {
 } from "../dtos/user.dto";
 import { UserCrudService } from "./user.crud.service";
 import { User } from "src/generated/prisma-class/user";
+import { DirectFilterPipe } from "@chax-at/prisma-filter";
+import { FilterDto } from "src/app/common/prisma-filter-common";
 
 @ApiTags("user/crud")
 @Controller("user/crud")
@@ -29,10 +33,13 @@ export class UserCrudController {
   ) {}
 
   @HttpCode(200)
-  @Post("findMany")
+  @Get("findMany")
   @ApiOkResponse({ type: PaginatedUserEntity })
-  async findManyUserPaginated(): Promise<PaginatedUserEntity> {
-    return await this.userCrudService.findManyPaginated({});
+  async findManyUserPaginated(
+    @Query(new DirectFilterPipe<any, Prisma.UserWhereInput>(["id", "name"], []))
+    filterDto: FilterDto<Prisma.UserWhereInput>,
+  ): Promise<PaginatedUserEntity> {
+    return await this.userCrudService.findManyPaginated(filterDto.findOptions);
   }
 
   @HttpCode(200)
