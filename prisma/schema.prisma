@@ -8,6 +8,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator prismaClassGenerator {
+  provider = "prisma-class-generator"
+  dryRun   = false
+  output = "../src/generated/prisma-class"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")

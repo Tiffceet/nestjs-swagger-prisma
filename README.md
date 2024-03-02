@@ -5,12 +5,14 @@
 - Docker
 - VSCode Debugger
 - @nestjs/config
+- prisma-class-generator
 
 ## Features
 - Swagger docs generation
 - Better logger with [pino-pretty](https://github.com/pinojs/pino-pretty)
 - Logs all incoming http requests
-- Prisma CRUD generation
+- CRUD controllers that you can copy paste (while not eliminating the need to create custom controller)
+- Built-in paginated controller with direct link to prisma filters
 - Uses pnpm to save disk space
 - fix(prettier): CRLF warning in windows
 - fix(prettier): single quote only 

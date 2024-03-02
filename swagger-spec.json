@@ -1,9 +1,112 @@
 {
   "openapi": "3.0.0",
   "paths": {
-    "/user": {
+    "/user/crud/findMany": {
       "post": {
-        "operationId": "UserController_createUser",
+        "operationId": "UserCrudController_findManyUserPaginated",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedUserEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user/crud"
+        ]
+      }
+    },
+    "/user/crud/{id}": {
+      "get": {
+        "operationId": "UserCrudController_findOneUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user/crud"
+        ]
+      },
+      "put": {
+        "operationId": "UserCrudController_updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "user/crud"
+        ]
+      },
+      "delete": {
+        "operationId": "UserCrudController_deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "user/crud"
+        ]
+      }
+    },
+    "/user/crud": {
+      "post": {
+        "operationId": "UserCrudController_createUser",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -17,11 +120,18 @@
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
           }
         },
         "tags": [
-          "user"
+          "user/crud"
         ]
       }
     }
@@ -43,6 +153,66 @@
       }
     },
     "schemas": {
+      "PaginationMeta": {
+        "type": "object",
+        "properties": {
+          "currentPage": {
+            "type": "number"
+          },
+          "perPage": {
+            "type": "number"
+          },
+          "total": {
+            "type": "number"
+          },
+          "next": {
+            "type": "number"
+          },
+          "prev": {
+            "type": "number"
+          },
+          "lastPage": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "perPage",
+          "total"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "PaginatedUserEntity": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/PaginationMeta"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        },
+        "required": [
+          "meta",
+          "data"
+        ]
+      },
       "CreateUserDto": {
         "type": "object",
         "properties": {
@@ -53,6 +223,14 @@
         "required": [
           "name"
         ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
       }
     }
   }
