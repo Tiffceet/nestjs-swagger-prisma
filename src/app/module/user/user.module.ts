@@ -5,16 +5,14 @@ import { UserService } from "./services/user.service";
 import { UserCrudService } from "./crud/user.crud.service";
 import { UserCrudController } from "./crud/user.crud.controller";
 
+const services = [UserService, UserCrudService];
+
+const controllers = [UserController, UserCrudController];
+
 @Module({
   imports: [],
-  providers: [
-    PrismaService,
-    UserController,
-    UserService,
-    UserCrudService,
-    UserCrudController,
-  ],
-  controllers: [UserController, UserCrudController],
+  providers: [PrismaService, ...services, ...controllers],
+  controllers: [...controllers],
   exports: [UserService],
 })
 export class UserModule {}

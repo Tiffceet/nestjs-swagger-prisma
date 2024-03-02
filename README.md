@@ -13,7 +13,7 @@
 - Better logger with [pino-pretty](https://github.com/pinojs/pino-pretty)
 - Logs all incoming http requests
 - CRUD controllers that you can copy paste (while not eliminating the need to create custom controller)
-- Paginated find many controllers with prisma filters 
+- Paginated find many controllers with direct access to prisma filters via [query builder](https://github.com/chax-at/prisma-filter)
 - Uses pnpm to save disk space
 - fix(prettier): CRLF warning in windows
 - fix(prettier): single quote only 

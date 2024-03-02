@@ -14,13 +14,16 @@ export class UserCrudService {
   deleteMany = this.prisma.client.user.deleteMany;
 
   async findManyPaginated(...arguments_: Parameters<typeof this.findMany>) {
+    arguments_[0].take = Number(arguments_[0]?.take) ?? 100;
+    arguments_[0].skip = Number(arguments_[0]?.skip) ?? 0;
+
     const data = await this.prisma.client.user.findMany(...arguments_);
     const count = await this.prisma.client.user.count({
       where: arguments_[0]?.where,
     });
 
-    const take = arguments_[0]?.take ?? 100;
-    const skip = arguments_[0]?.skip ?? 0;
+    const take = arguments_[0].take;
+    const skip = arguments_[0].skip;
 
     const perPage = take;
     const page = Math.floor(skip / take + 1);
