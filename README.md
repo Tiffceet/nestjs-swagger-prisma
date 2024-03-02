@@ -14,6 +14,7 @@
 - Uses pnpm to save disk space
 - fix(prettier): CFLF warning in windows
 - fix(prettier): single quote only 
+- Github action to build docker image
 
 ## Folder structure
 ```
