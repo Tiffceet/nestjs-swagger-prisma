@@ -17,5 +17,22 @@
 
 ## Folder structure
 ```
-L 
+L app
+  L module
+    L user
+      L controllers
+      L crud
+      L dtos
+      L services
+      L user.module.ts
+    L ...
+  L providers
+  L common
+L bootstrap
+L config
+L integrations
+L interceptors
 ```
+
+## Todo
+- Add unit & e2e test
