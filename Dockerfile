@@ -6,7 +6,7 @@ FROM base as dependencies
 
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm i
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
 
 FROM base AS build
 
