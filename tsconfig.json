@@ -1,4 +1,10 @@
 {
+  "exclude": [
+    "scripts"
+  ],
+  "include": [
+    "src"
+  ],
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
