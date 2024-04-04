@@ -26,10 +26,11 @@ $ pnpm dev
 - Uses pnpm to save disk space
 - fix(prettier): CRLF warning in windows
 - fix(prettier): single quote only 
-- Github action to build docker image with BuildKit Cache Mounts
+- ~~Github action to build docker image with BuildKit Cache Mounts~~
 - Github action to check the app build status with pnpm cache to speed up checking
 - Better vscode debugging experience w/o restarting api server
 - Generates entity class from prisma schema
+- Add cookie JWT authentication
 
 ## Folder structure
 ```
