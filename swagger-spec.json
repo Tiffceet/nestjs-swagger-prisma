@@ -57,6 +57,17 @@
         }
       }
     },
+    "/auth/refreshToken": {
+      "post": {
+        "operationId": "AuthController_refreshToken",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/auth/currentUser": {
       "post": {
         "operationId": "AuthController_currentUser",

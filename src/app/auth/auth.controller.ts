@@ -4,6 +4,7 @@ import {
   HttpCode,
   Post,
   Res,
+  Req,
   UseGuards,
 } from "@nestjs/common";
 import { Response } from "express";
@@ -13,7 +14,7 @@ import { ApiOkResponse } from "@nestjs/swagger";
 import { User } from "src/generated/prisma-class/user";
 import { AuthGuard } from "./auth.guard";
 import { AuthUser } from "./auth.decorator";
-
+import { Request } from "express";
 @Controller("auth")
 export class AuthController {
   constructor(private authService: AuthService) {}
@@ -33,14 +34,35 @@ export class AuthController {
     @Body() body: AuthDto,
     @Res({ passthrough: true }) response: Response,
   ): Promise<User> {
-    const { user, accessToken } = await this.authService.signIn(
+    const { user, accessToken, refreshToken } = await this.authService.signIn(
       body.username,
       body.password,
     );
-    response.cookie("token", accessToken, {
+    response.cookie("accessToken", accessToken, {
+      httpOnly: true,
+    });
+    response.cookie("refreshToken", refreshToken, {
       httpOnly: true,
     });
     return user;
+  }
+
+  @HttpCode(200)
+  @Post("refreshToken")
+  @ApiOkResponse()
+  async refreshToken(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const { accessToken, refreshToken } = await this.authService.refreshToken(
+      request.cookies.refreshToken,
+    );
+    response.cookie("accessToken", accessToken, {
+      httpOnly: true,
+    });
+    response.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+    });
   }
 
   @HttpCode(200)
