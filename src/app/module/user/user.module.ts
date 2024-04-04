@@ -13,6 +13,6 @@ const controllers = [UserController, UserCrudController];
   imports: [],
   providers: [PrismaService, ...services, ...controllers],
   controllers: [...controllers],
-  exports: [UserService],
+  exports: [...services],
 })
 export class UserModule {}

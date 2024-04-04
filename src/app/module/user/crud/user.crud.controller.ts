@@ -36,7 +36,9 @@ export class UserCrudController {
   @Get("findMany")
   @ApiOkResponse({ type: PaginatedUserEntity })
   async findManyUserPaginated(
-    @Query(new DirectFilterPipe<any, Prisma.UserWhereInput>(["id", "name"], []))
+    @Query(
+      new DirectFilterPipe<any, Prisma.UserWhereInput>(["id", "username"], []),
+    )
     filterDto: FilterDto<Prisma.UserWhereInput>,
   ): Promise<PaginatedUserEntity> {
     return await this.userCrudService.findManyPaginated(filterDto.findOptions);
@@ -55,7 +57,8 @@ export class UserCrudController {
   async createUser(@Body() body: CreateUserDto): Promise<User> {
     return await this.userCrudService.create({
       data: {
-        name: body.name,
+        username: body.username,
+        password: "",
       },
     });
   }
