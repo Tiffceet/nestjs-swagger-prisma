@@ -11,7 +11,7 @@ generator client {
 generator prismaClassGenerator {
   provider = "prisma-class-generator"
   dryRun   = false
-  output = "../src/generated/prisma-class"
+  output   = "../src/generated/prisma-class"
 }
 
 datasource db {
@@ -20,6 +20,10 @@ datasource db {
 }
 
 model User {
-  id   String @id @default(cuid())
-  name String
+  id       String @id @default(cuid())
+  username String
+  password String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
