@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { Response } from "express";
 import { AuthService } from "./auth.service";
-import { AuthDto } from "./auth.dto";
+import { AuthDto, LoginResponse } from "./auth.dto";
 import { ApiOkResponse } from "@nestjs/swagger";
 import { User } from "src/generated/prisma-class/user";
 import { AuthGuard } from "./auth.guard";
@@ -29,12 +29,12 @@ export class AuthController {
 
   @HttpCode(200)
   @Post("login")
-  @ApiOkResponse({ type: User })
+  @ApiOkResponse({ type: LoginResponse })
   async login(
     @Body() body: AuthDto,
     @Res({ passthrough: true }) response: Response,
-  ): Promise<User> {
-    const { user, accessToken, refreshToken } = await this.authService.signIn(
+  ): Promise<LoginResponse> {
+    const { userId, accessToken, refreshToken } = await this.authService.signIn(
       body.username,
       body.password,
     );
@@ -44,7 +44,7 @@ export class AuthController {
     response.cookie("refreshToken", refreshToken, {
       httpOnly: true,
     });
-    return user;
+    return { userId };
   }
 
   @HttpCode(200)

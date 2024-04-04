@@ -30,9 +30,18 @@ export class AuthService {
     const user = await this.userCrudService.findFirst({
       where: {
         username,
-        password,
       },
     });
+
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+
+    if (
+      !(await this.passwordService.validatePassword(password, user.password))
+    ) {
+      throw new UnauthorizedException();
+    }
 
     const accessToken = await this.jwtService.signAsync(
       { userId: user.id },
@@ -50,7 +59,7 @@ export class AuthService {
       },
     );
 
-    return { user, accessToken, refreshToken };
+    return { userId: user.id, accessToken, refreshToken };
   }
 
   async currentUser(userId: string) {
@@ -60,7 +69,10 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException("User not found");
     }
-    return user;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...restUser } = user;
+
+    return restUser;
   }
 
   async refreshToken(token: string) {
